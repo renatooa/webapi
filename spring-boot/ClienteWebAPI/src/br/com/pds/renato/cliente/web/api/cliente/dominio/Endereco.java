@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Endereco implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private String rua;
 	private String numero;
 	private String bairro;
@@ -18,14 +19,23 @@ public class Endereco implements Serializable {
 	public Endereco() {
 	}
 
-	public Endereco(String rua, String numero, String bairro, String cidade, String cep, String uf) {
+	public Endereco(int id, String rua, String numero, String bairro, String cidade, String cep, String uf) {
 		super();
+		this.id = id;
 		this.rua = rua;
 		this.numero = numero;
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.cep = cep;
 		this.uf = uf;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getRua() {
