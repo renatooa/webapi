@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.pds.renato.cliente.web.api.cliente.dominio.Cliente;
+import br.com.pds.renato.cliente.web.api.cliente.dominio.Endereco;
 import br.com.pds.renato.cliente.web.api.dto.ClienteBag;
+import br.com.pds.renato.cliente.web.api.dto.EnderecoBag;
 import br.com.pds.renato.cliente.web.api.dto.Mensagem;
 
 @Controller
@@ -103,5 +105,42 @@ public class ClienteController {
 	@ResponseBody
 	public ClienteBag getClientes() {
 		return new ClienteBag(Cliente.getClientes(), 25, 100);
+	}
+
+	@RequestMapping(path = "/{id}/enderecos", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getClienteEndereco(@PathVariable(value = "id") int id) {
+
+		Object obj = getCliente(id);
+
+		if (obj instanceof Cliente) {
+			return new EnderecoBag(((Cliente) obj).getEnderecos(), 5, 1);
+		}
+
+		return obj;
+	}
+
+	@RequestMapping(path = "/{id}/enderecos/{idEndereco}", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getClienteEndereco(@PathVariable(value = "id") int id,
+			@PathVariable(value = "idEndereco") int idEndereco) {
+
+		Object obj = getCliente(id);
+
+		if (obj instanceof Cliente) {
+			try {
+
+				return ((Cliente) obj).getEnderecos().stream().filter(end -> end.getId() == idEndereco).findFirst()
+						.get();
+			} catch (NoSuchElementException e) {
+				return new Mensagem(404, "Endereço não encontrado", null,
+						"https://pt.wikipedia.org/wiki/Lista_de_c%C3%B3digos_de_status_HTTP");
+			} catch (Exception ex) {
+				return new Mensagem(500, "Servidor com problemas", "Verifique o quanto antes",
+						"https://pt.wikipedia.org/wiki/Lista_de_c%C3%B3digos_de_status_HTTP");
+			}
+		}
+
+		return obj;
 	}
 }
