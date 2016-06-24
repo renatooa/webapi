@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.pds.renato.cliente.web.api.cliente.dominio.Cliente;
-import br.com.pds.renato.cliente.web.api.cliente.dominio.Endereco;
 import br.com.pds.renato.cliente.web.api.dto.ClienteBag;
 import br.com.pds.renato.cliente.web.api.dto.EnderecoBag;
 import br.com.pds.renato.cliente.web.api.dto.Mensagem;
